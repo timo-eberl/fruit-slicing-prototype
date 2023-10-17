@@ -1,0 +1,13 @@
+[gd_resource type="StandardMaterial3D" load_steps=4 format=3 uid="uid://bialjgduv66ab"]
+
+[ext_resource type="Texture2D" uid="uid://snakum6a7byl" path="res://textures/round-pattern-wallpaper1-unity/round-pattern-wallpaper1_albedo.png" id="1_a37if"]
+[ext_resource type="Texture2D" uid="uid://10taup0qn6gv" path="res://textures/round-pattern-wallpaper1-unity/round-pattern-wallpaper1_ao.png" id="2_jp2mr"]
+[ext_resource type="Texture2D" uid="uid://bhqf2n0cu6dak" path="res://textures/round-pattern-wallpaper1-unity/round-pattern-wallpaper1_normal-ogl.png" id="3_q46nn"]
+
+[resource]
+albedo_color = Color(0.741176, 0.792157, 0.623529, 1)
+albedo_texture = ExtResource("1_a37if")
+normal_enabled = true
+normal_texture = ExtResource("3_q46nn")
+ao_enabled = true
+ao_texture = ExtResource("2_jp2mr")
