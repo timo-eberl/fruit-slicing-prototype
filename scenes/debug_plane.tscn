@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=3 uid="uid://c3jbtn8asi28n"]
+
+[ext_resource type="Material" uid="uid://c1pqvqcnfoue7" path="res://materials/debug.tres" id="1_wyul1"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_u33xc"]
+
+[node name="debug_plane" type="Node3D"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.314719, 0, 0, 0, -1.37568e-08, -0.314719, 0, 0.314719, -1.37568e-08, 0, 0, 0)
+material_override = ExtResource("1_wyul1")
+transparency = 0.86
+cast_shadow = 0
+mesh = SubResource("PlaneMesh_u33xc")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(-0.314719, 4.75212e-08, 0, 2.07722e-15, 1.37568e-08, -0.314719, -4.75212e-08, -0.314719, -1.37568e-08, 0, 0, 0)
+material_override = ExtResource("1_wyul1")
+transparency = 0.86
+cast_shadow = 0
+mesh = SubResource("PlaneMesh_u33xc")
