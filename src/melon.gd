@@ -6,7 +6,7 @@ extends Node3D
 @onready var collision_area = $collision_area
 @onready var mesh_whole = $mesh_whole
 
-var melon_halve_scene = preload("res://scenes/melon_halve.tscn")
+var dead_melon_scene = preload ("res://scenes/dead_melon.tscn")
 var debug_plane_scene = preload("res://scenes/debug_plane.tscn")
 
 
@@ -14,33 +14,74 @@ func halve_along_plane(plane : Plane, cutting_direction : Vector3, cutting_speed
 	if plane.normal.is_zero_approx():
 		push_error("plane.normal can't be zero.")
 		return
-
-	spawn_halve(plane.normal, cutting_direction, cutting_speed)
-	spawn_halve(-plane.normal, cutting_direction, cutting_speed)
+	
+	spawn_halve(plane, cutting_direction, cutting_speed, false)
+	spawn_halve(plane, cutting_direction, cutting_speed, true)
 
 	self.queue_free()
-
+	
 	if show_debug_plane:
-		var debug_plane_instance = debug_plane_scene.instantiate()
-		get_tree().get_root().add_child(debug_plane_instance)
-		debug_plane_instance.global_position = self.global_position
-		debug_plane_instance.transform.basis = Basis.looking_at(plane.normal)
-		await get_tree().create_timer(1).timeout
-		debug_plane_instance.queue_free()
+		var plane_local : Plane = plane * self.global_transform
+		var debug_plane_instance : Node3D = debug_plane_scene.instantiate()
+		self.add_child(debug_plane_instance)
+		debug_plane_instance.position = plane_local.normal * plane_local.d
+		debug_plane_instance.transform.basis = Basis.looking_at(plane_local.normal)
+		debug_plane_instance.reparent(get_tree().get_root())
 
 
-func spawn_halve(direction : Vector3, cutting_direction : Vector3, cutting_speed : float):
-	var melon_halve_instance : Node3D = melon_halve_scene.instantiate()
+func spawn_halve(plane : Plane, cutting_direction : Vector3, cutting_speed : float, rotate_180 : bool):
+	# instantiate a whole melon (without melon logic) that we will chop up
+	var melon_halve_instance : Node3D = dead_melon_scene.instantiate()
 	get_tree().get_root().add_child(melon_halve_instance)
-	melon_halve_instance.global_position = self.global_position
-	melon_halve_instance.transform.basis = Basis.looking_at(direction)
-
+	melon_halve_instance.global_transform = self.global_transform
+	
+	# rotate so the collider ends up on the correct side
+	if rotate_180:
+		melon_halve_instance.transform.basis = melon_halve_instance.transform.basis.rotated(Vector3(0,1,0), 3.141)
+	
+	var mesh_node : MeshInstance3D = melon_halve_instance.get_node("rigidbody/scaling/mesh")
+	var mesh_resource : ArrayMesh = mesh_node.mesh
+	
+	# for surface_index in range(mesh.get_surface_count()):
+	var surface_index = 0 # for now we have only one surface
+	
+	# we don't want to edit the resource, so we create a new mesh instance
+	var mesh_instance = ArrayMesh.new()
+	var mdt = MeshDataTool.new()
+	mdt.create_from_surface(mesh_resource, surface_index)
+	
+	var plane_local : Plane = plane * mesh_node.global_transform
+	
+	# iterate over vertices
+	for i in range(mdt.get_vertex_count()):
+		var vertex = mdt.get_vertex(i)
+		
+		if plane_local.is_point_over(vertex) == rotate_180:
+			# collapse geometry
+			var approx_center_of_cut = mesh_node.position + plane_local.normal * plane_local.d
+			mdt.set_vertex(i, approx_center_of_cut)
+	
+	# add surface to mesh_instance
+	mdt.commit_to_surface(mesh_instance)
+	mesh_node.mesh = mesh_instance
+	
+	# TODO: Slice Mesh more accurately and add material on the inside
+	
+	# TODO: Change collider and weight based on slice size
+	
 	var rigid_body : RigidBody3D = melon_halve_instance.get_node("rigidbody")
-	# move away from cutting point
-	rigid_body.apply_central_force(-direction * 40)
-	# move in cutting direction
-	rigid_body.apply_central_force(cutting_direction * 10 * cutting_speed)
-
-	var camera_direction = Vector3(0,0,-1) # assumption
-	var torque = direction.cross(camera_direction)
-	rigid_body.apply_torque(torque.normalized() * 0.2)
+#	rigid_body.freeze = true # disable physics for testing
+	var direction = -plane.normal
+	if rotate_180:
+		direction = -direction
+	# yeet away from cutting point so the halves don't intersect
+	rigid_body.apply_central_force(-direction * 70)
+	# yeet in cutting direction
+	rigid_body.apply_central_force(cutting_direction * 15 * cutting_speed)
+	# apply torque in a way that the inside of the fruit always faces the player
+	var torque_multiplier = 0.7
+	if rotate_180:
+		rigid_body.apply_torque(-cutting_direction * torque_multiplier)
+	else:
+		rigid_body.apply_torque(cutting_direction * torque_multiplier)
+		
