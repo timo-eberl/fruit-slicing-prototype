@@ -1,36 +1,10 @@
-[gd_scene load_steps=9 format=3 uid="uid://o1g5y6vvsebn"]
+[gd_scene load_steps=7 format=3 uid="uid://o1g5y6vvsebn"]
 
 [ext_resource type="Script" path="res://src/world.gd" id="1_lbt5e"]
 [ext_resource type="PackedScene" uid="uid://fcxikgqw2kqx" path="res://scenes/player.tscn" id="1_s0625"]
 [ext_resource type="PackedScene" uid="uid://cqf0at8sydl1l" path="res://scenes/melon.tscn" id="3_duuwj"]
 [ext_resource type="PackedScene" uid="uid://xmrur73214ct" path="res://scenes/kitchen.tscn" id="3_vksqg"]
-
-[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_55h36"]
-sky_top_color = Color(0.407843, 0.67451, 0.858824, 1)
-
-[sub_resource type="Sky" id="Sky_t4oqs"]
-sky_material = SubResource("ProceduralSkyMaterial_55h36")
-
-[sub_resource type="Environment" id="Environment_sglyr"]
-background_mode = 2
-sky = SubResource("Sky_t4oqs")
-ambient_light_source = 1
-reflected_light_source = 1
-tonemap_mode = 2
-ssao_enabled = true
-ssao_radius = 0.26
-ssao_intensity = 2.99
-ssao_light_affect = 1.0
-ssil_intensity = 0.0
-sdfgi_enabled = true
-sdfgi_use_occlusion = true
-sdfgi_read_sky_light = false
-glow_enabled = true
-glow_normalized = true
-glow_strength = 0.49
-glow_blend_mode = 0
-adjustment_enabled = true
-adjustment_saturation = 1.5
+[ext_resource type="Environment" uid="uid://d2ps7v18eea7o" path="res://scenes/world-environment.tres" id="5_rw4xc"]
 
 [sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_t2jro"]
 
@@ -107,6 +81,7 @@ show_debug_plane = false
 [node name="lights" type="Node3D" parent="."]
 
 [node name="stove" type="Node3D" parent="lights"]
+visible = false
 
 [node name="SpotLight3D" type="SpotLight3D" parent="lights/stove"]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0.0365293, 1.89959, -1.72514)
@@ -154,6 +129,7 @@ spot_attenuation = 1.1487
 spot_angle = 60.21
 
 [node name="ceiling" type="Node3D" parent="lights"]
+visible = false
 
 [node name="spotlights" type="Node3D" parent="lights/ceiling"]
 
@@ -733,14 +709,24 @@ transform = Transform3D(0.337748, -0.56302, -0.754277, 0.18476, 0.825436, -0.533
 
 [node name="SpotLight3D" type="SpotLight3D" parent="lights/window"]
 transform = Transform3D(0.324461, 0.537791, -0.778143, -0.0258862, 0.827389, 0.561032, 0.945545, -0.16189, 0.282377, -1.83511, 1.29774, 0.678559)
-light_color = Color(1, 0.858824, 0.572549, 1)
+light_color = Color(0.921569, 0.866667, 0.831373, 1)
 light_energy = 16.0
 shadow_enabled = true
 shadow_bias = 0.0
-shadow_blur = 5.101
+shadow_blur = 2.879
 spot_range = 33.927
 spot_angle = 15.22
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource("Environment_sglyr")
+environment = ExtResource("5_rw4xc")
 camera_attributes = SubResource("CameraAttributesPractical_t2jro")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, -0.378125)
+light_energy = 0.4
+omni_attenuation = 0.307787
+
+[node name="OmniLight3D2" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 5.898)
+light_energy = 0.4
+omni_attenuation = 0.307787
