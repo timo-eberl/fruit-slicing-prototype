@@ -717,16 +717,16 @@ shadow_blur = 2.879
 spot_range = 33.927
 spot_angle = 15.22
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = ExtResource("5_rw4xc")
-camera_attributes = SubResource("CameraAttributesPractical_t2jro")
-
-[node name="OmniLight3D" type="OmniLight3D" parent="."]
+[node name="OmniLight3D" type="OmniLight3D" parent="lights"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, -0.378125)
 light_energy = 0.4
 omni_attenuation = 0.307787
 
-[node name="OmniLight3D2" type="OmniLight3D" parent="."]
+[node name="OmniLight3D2" type="OmniLight3D" parent="lights"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 5.898)
 light_energy = 0.4
 omni_attenuation = 0.307787
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = ExtResource("5_rw4xc")
+camera_attributes = SubResource("CameraAttributesPractical_t2jro")
