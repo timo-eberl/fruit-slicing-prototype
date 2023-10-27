@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://d0bev21hdxc1g"]
+
+[ext_resource type="PackedScene" uid="uid://odwb6n7weti1" path="res://scenes/sword.tscn" id="1_3dpjr"]
+
+[node name="sword_vive" type="Node3D"]
+
+[node name="sword" parent="." instance=ExtResource("1_3dpjr")]
+transform = Transform3D(0.132412, 0, 0, 0, -5.78794e-09, 0.132412, 0, -0.132413, -5.78792e-09, 0, 0, 0.092)

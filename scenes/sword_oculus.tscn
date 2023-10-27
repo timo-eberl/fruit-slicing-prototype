@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://dyldyivlcuvql"]
+
+[ext_resource type="PackedScene" uid="uid://odwb6n7weti1" path="res://scenes/sword.tscn" id="1_7b8g1"]
+
+[node name="sword_oculus" type="Node3D"]
+
+[node name="sword" parent="." instance=ExtResource("1_7b8g1")]
+transform = Transform3D(0.126742, 0.00715053, -0.0376616, 0.0242643, 0.0857482, 0.0979361, 0.0296779, -0.100644, 0.0807656, 0.009, -0.015, 0.092)

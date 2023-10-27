@@ -22,59 +22,45 @@ transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 
 
 [node name="melon2" parent="melons" instance=ExtResource("3_duuwj")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.335245, 1.31937, 0.659125)
-show_debug_plane = false
 
 [node name="melon4" parent="melons" instance=ExtResource("3_duuwj")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.049016, 1.64546, 0.84514)
-show_debug_plane = false
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.202781, 1.64546, 0.84514)
 
 [node name="melon6" parent="melons" instance=ExtResource("3_duuwj")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.289795, 1.4, 0.647439)
-show_debug_plane = false
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.572105, 1.4, 0.647439)
 
 [node name="melon11" parent="melons" instance=ExtResource("3_duuwj")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.21244, 1.71947, 1.0632)
-show_debug_plane = false
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.502985, 1.71947, 1.0632)
 
 [node name="melon13" parent="melons" instance=ExtResource("3_duuwj")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.265096, 1.4, 1.18752)
-show_debug_plane = false
 
 [node name="melon15" parent="melons" instance=ExtResource("3_duuwj")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.474532, 1.71947, 0.929448)
-show_debug_plane = false
 
 [node name="melon3" parent="melons" instance=ExtResource("3_duuwj")]
 transform = Transform3D(0.169762, 0, -0.985485, 0, 1, 0, 0.985485, 0, 0.169762, -0.663068, 1.31937, 0.81399)
-show_debug_plane = false
 
 [node name="melon5" parent="melons" instance=ExtResource("3_duuwj")]
 transform = Transform3D(0.169762, 0, -0.985485, 0, 1, 0, 0.985485, 0, 0.169762, -0.894974, 1.64546, 0.563493)
-show_debug_plane = false
 
 [node name="melon7" parent="melons" instance=ExtResource("3_duuwj")]
 transform = Transform3D(0.169762, 0, -0.985485, 0, 1, 0, 0.985485, 0, 0.169762, -0.75766, 1.4, 0.196038)
-show_debug_plane = false
 
 [node name="melon16" parent="melons" instance=ExtResource("3_duuwj")]
 transform = Transform3D(0.169762, 0, -0.985485, 0, 1, 0, 0.985485, 0, 0.169762, -0.905822, 1.71947, 0.997146)
-show_debug_plane = false
 
 [node name="melon8" parent="melons" instance=ExtResource("3_duuwj")]
 transform = Transform3D(-0.224634, 0.485283, -0.845009, 0.124676, 0.874357, 0.468994, 0.966434, 0, -0.256914, 0.898485, 1.31664, 0.796472)
-show_debug_plane = false
 
 [node name="melon9" parent="melons" instance=ExtResource("3_duuwj")]
 transform = Transform3D(-0.224634, 0.485283, -0.845009, 0.124676, 0.874357, 0.468994, 0.966434, 0, -0.256914, 0.963847, 1.65332, 0.472061)
-show_debug_plane = false
 
 [node name="melon10" parent="melons" instance=ExtResource("3_duuwj")]
 transform = Transform3D(-0.224634, 0.485283, -0.845009, 0.124676, 0.874357, 0.468994, 0.966434, 0, -0.256914, 1.0879, 1.30373, 0.195414)
-show_debug_plane = false
 
 [node name="melon17" parent="melons" instance=ExtResource("3_duuwj")]
 transform = Transform3D(-0.224634, 0.485283, -0.845009, 0.124676, 0.874357, 0.468994, 0.966434, 0, -0.256914, 0.832935, 1.81062, 0.861634)
-show_debug_plane = false
 
 [node name="kitchen" parent="." instance=ExtResource("3_vksqg")]
 

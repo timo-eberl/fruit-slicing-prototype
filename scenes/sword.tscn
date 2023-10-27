@@ -1,0 +1,81 @@
+[gd_scene load_steps=7 format=3 uid="uid://odwb6n7weti1"]
+
+[ext_resource type="Script" path="res://src/blade.gd" id="1_ll8s0"]
+[ext_resource type="Material" uid="uid://nomti206sy2t" path="res://materials/saber.tres" id="2_h5fyg"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_aev6k"]
+albedo_color = Color(0.329412, 0.329412, 0.329412, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_nb4r4"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_5c1ag"]
+radius = 0.03
+height = 1.419
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_vgcw6"]
+radius = 0.03
+height = 1.419
+
+[node name="sword" type="Node3D"]
+transform = Transform3D(0.132412, 0, 0, 0, 0.132412, 0, 0, 0, 0.132412, 0, 0, 0)
+
+[node name="Hilt" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.273078, -5.02914e-08, -2.84053e-08, 2.51457e-08, 0.708277, 5.96046e-08, 5.12227e-09, -2.38419e-07, 0.273078, -1.66893e-06, -0.0203218, 1.90735e-06)
+material_override = SubResource("StandardMaterial3D_aev6k")
+mesh = SubResource("CylinderMesh_nb4r4")
+skeleton = NodePath("../..")
+
+[node name="Hilt2" type="MeshInstance3D" parent="Hilt"]
+transform = Transform3D(1.2948, 2.04891e-08, 1.17347e-07, 5.96046e-08, 0.136943, 7.45058e-08, 0, -7.45058e-08, 1.2948, -1.71661e-05, 0.994302, 1.04904e-05)
+material_override = SubResource("StandardMaterial3D_aev6k")
+mesh = SubResource("CylinderMesh_nb4r4")
+skeleton = NodePath("../../..")
+
+[node name="blade" type="Node3D" parent="."]
+transform = Transform3D(3.67, -8.19564e-08, -2.30968e-07, 1.11759e-07, 3.67, -7.15256e-07, 5.21541e-08, 2.38419e-07, 3.67, 9.53674e-07, 0.784859, 9.53674e-07)
+script = ExtResource("1_ll8s0")
+
+[node name="base" type="Node3D" parent="blade"]
+transform = Transform3D(1, -1.494e-07, 3.68647e-08, 1.494e-07, 1, 1.21072e-06, -3.68649e-08, -1.21072e-06, 1, 0, 0, 0)
+
+[node name="tip" type="Node3D" parent="blade"]
+transform = Transform3D(1, -1.75089e-07, 1.86265e-08, 1.8999e-07, 1, 1.2517e-06, -2.98023e-08, -1.3411e-06, 1, -3.33786e-06, 1.37822, 3.33786e-06)
+
+[node name="mesh" type="MeshInstance3D" parent="blade"]
+transform = Transform3D(1, -4.08447e-07, 3.71313e-08, 4.08447e-07, 1, 6.60671e-07, -3.71316e-08, -6.60671e-07, 1, -2.5034e-06, 0.67643, 5.60284e-06)
+material_override = ExtResource("2_h5fyg")
+cast_shadow = 0
+mesh = SubResource("CapsuleMesh_5c1ag")
+skeleton = NodePath("../../..")
+
+[node name="collision_area" type="Area3D" parent="blade"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="blade/collision_area"]
+transform = Transform3D(1, 0, -3.72529e-09, 1.11759e-08, 1, 2.98023e-08, 1.86265e-09, -1.49012e-07, 1, 0, 0.676, -4.76837e-07)
+shape = SubResource("CapsuleShape3D_vgcw6")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="blade"]
+transform = Transform3D(1, -3.80165e-08, 3.80165e-08, 3.80165e-08, 1, 0, -3.80165e-08, 1.44525e-15, 1, 1.19209e-07, 0.0814388, -7.15256e-07)
+light_color = Color(0.345098, 0.517647, 0.658824, 1)
+light_energy = 0.7
+omni_range = 2.0
+omni_attenuation = 0.63728
+
+[node name="OmniLight3D2" type="OmniLight3D" parent="blade"]
+transform = Transform3D(1, -1.32152e-07, 9.59462e-08, 1.32152e-07, 1, 5.79301e-08, -9.59462e-08, -5.793e-08, 1, 1.78814e-07, 0.696876, -1.78814e-06)
+light_color = Color(0.345098, 0.517647, 0.658824, 1)
+light_energy = 0.7
+shadow_enabled = true
+shadow_blur = 10.0
+omni_range = 2.0
+omni_attenuation = 0.63728
+
+[node name="OmniLight3D3" type="OmniLight3D" parent="blade"]
+transform = Transform3D(1, -1.01377e-07, 7.60329e-08, 1.01377e-07, 1, 5.52465e-14, -7.60329e-08, -4.75385e-14, 1, -5.96046e-08, 1.31878, -1.07288e-06)
+light_color = Color(0.345098, 0.517647, 0.658824, 1)
+light_energy = 0.7
+omni_range = 2.0
+omni_attenuation = 0.63728
+
+[connection signal="area_entered" from="blade/collision_area" to="blade" method="_on_collision_area_entered"]
+[connection signal="area_exited" from="blade/collision_area" to="blade" method="_on_collision_area_exited"]

@@ -14,12 +14,21 @@ func _ready():
 	# 60 is default, but even at 120 the results are undesirable
 	Engine.physics_ticks_per_second = 240
 
-func _on_collision_area_entered(_area : Area3D):
+func _on_collision_area_entered(area : Area3D):
+	if !area.owner.is_in_group("Sliceable"):
+		return
+	
 	time_ms_on_enter = Time.get_ticks_msec()
 	base_position_on_enter = base.global_position
 	tip_position_on_enter = tip.global_position
 
 func _on_collision_area_exited(area : Area3D):
+	if !area.owner.is_in_group("Sliceable"):
+		return
+	
+	# TODO: check if the blade has moved relative to the melon
+	# reason: a melon could fly through the blade without the blade being moved
+	
 	# wait until the blade has moved
 	while tip_position_on_enter == tip.global_position:
 		push_warning("Blade has not moved since it entered. Waiting one physics step.")
