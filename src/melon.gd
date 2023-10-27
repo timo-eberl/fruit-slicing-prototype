@@ -3,8 +3,9 @@ extends Node3D
 
 @export var show_debug_plane : bool = false
 
-@onready var collision_area = $collision_area
-@onready var mesh_whole = $mesh_whole
+@onready var rigid_body = $rigidbody
+@onready var collision_area = $rigidbody/collision_area
+@onready var mesh_whole = $rigidbody/mesh_whole
 
 var dead_melon_scene = preload ("res://scenes/dead_melon.tscn")
 var debug_plane_scene = preload("res://scenes/debug_plane.tscn")
@@ -21,9 +22,9 @@ func halve_along_plane(plane : Plane, cutting_direction : Vector3, cutting_speed
 	self.queue_free()
 	
 	if show_debug_plane:
-		var plane_local : Plane = plane * self.global_transform
+		var plane_local : Plane = plane * rigid_body.global_transform
 		var debug_plane_instance : Node3D = debug_plane_scene.instantiate()
-		self.add_child(debug_plane_instance)
+		rigid_body.add_child(debug_plane_instance)
 		debug_plane_instance.position = plane_local.normal * plane_local.d
 		debug_plane_instance.transform.basis = Basis.looking_at(plane_local.normal)
 		debug_plane_instance.reparent(get_tree().get_root())
@@ -33,7 +34,7 @@ func spawn_halve(plane : Plane, cutting_direction : Vector3, cutting_speed : flo
 	# instantiate a whole melon (without melon logic) that we will chop up
 	var melon_halve_instance : Node3D = dead_melon_scene.instantiate()
 	get_tree().get_root().add_child(melon_halve_instance)
-	melon_halve_instance.global_transform = self.global_transform
+	melon_halve_instance.global_transform = rigid_body.global_transform
 	
 	# rotate so the collider ends up on the correct side
 	if rotate_180:
@@ -69,19 +70,19 @@ func spawn_halve(plane : Plane, cutting_direction : Vector3, cutting_speed : flo
 	
 	# TODO: Change collider and weight based on slice size
 	
-	var rigid_body : RigidBody3D = melon_halve_instance.get_node("rigidbody")
-#	rigid_body.freeze = true # disable physics for testing
+	var halve_rigid_body : RigidBody3D = melon_halve_instance.get_node("rigidbody")
+#	halve_rigid_body.freeze = true # disable physics for testing
 	var direction = -plane.normal
 	if rotate_180:
 		direction = -direction
 	# yeet away from cutting point so the halves don't intersect
-	rigid_body.apply_central_force(-direction * 70)
+	halve_rigid_body.apply_central_force(-direction * 70)
 	# yeet in cutting direction
-	rigid_body.apply_central_force(cutting_direction * 15 * cutting_speed)
+	halve_rigid_body.apply_central_force(cutting_direction * 15 * cutting_speed)
 	# apply torque in a way that the inside of the fruit always faces the player
 	var torque_multiplier = 0.7
 	if rotate_180:
-		rigid_body.apply_torque(-cutting_direction * torque_multiplier)
+		halve_rigid_body.apply_torque(-cutting_direction * torque_multiplier)
 	else:
-		rigid_body.apply_torque(cutting_direction * torque_multiplier)
+		halve_rigid_body.apply_torque(cutting_direction * torque_multiplier)
 		

@@ -1,6 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://cqf0at8sydl1l"]
+[gd_scene load_steps=7 format=3 uid="uid://cqf0at8sydl1l"]
 
 [ext_resource type="Script" path="res://src/melon.gd" id="1_girv3"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_xaihw"]
+radius = 0.110697
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_lmsbt"]
 radius = 0.254048
@@ -46,15 +49,20 @@ shadow_mesh = SubResource("ArrayMesh_hqyg7")
 
 [node name="melon" type="Node3D"]
 script = ExtResource("1_girv3")
-show_debug_plane = true
 
-[node name="collision_area" type="Area3D" parent="."]
+[node name="rigidbody" type="RigidBody3D" parent="."]
+gravity_scale = 0.3
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="rigidbody"]
+shape = SubResource("SphereShape3D_xaihw")
+
+[node name="collision_area" type="Area3D" parent="rigidbody"]
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="collision_area"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="rigidbody/collision_area"]
 shape = SubResource("SphereShape3D_lmsbt")
 
-[node name="mesh_whole" type="MeshInstance3D" parent="."]
+[node name="mesh_whole" type="MeshInstance3D" parent="rigidbody"]
 transform = Transform3D(0.5, 0, 0, 0, -2.18557e-08, -0.5, 0, 0.5, -2.18557e-08, 0, 0, 0)
 mesh = SubResource("ArrayMesh_ocn8m")
 skeleton = NodePath("")
